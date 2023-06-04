@@ -1,0 +1,79 @@
+class Graph:
+    def __init__(self, num_vertices, directed=False, weighted=False):
+        self.num_vertices = num_vertices
+        self.directed = directed
+        self.weighted = weighted
+        self.adj_matrix = [[0] * num_vertices for _ in range(num_vertices)]
+        self.adj_list = [[] for _ in range(num_vertices)]
+
+    def add_edge(self, source, destination, weight=None):
+        if source < 0 or source >= self.num_vertices or destination < 0 or destination >= self.num_vertices:
+            print("Błędne indeksy wierzchołków.")
+            return
+
+        self.adj_matrix[source][destination] = weight if self.weighted else 1
+        self.adj_list[source].append((destination, weight))
+
+        if not self.directed:
+            self.adj_matrix[destination][source] = weight if self.weighted else 1
+            self.adj_list[destination].append((source, weight))
+
+    def print_adj_matrix(self):
+        print("Macierz sąsiedztwa:")
+        for row in self.adj_matrix:
+            print(row)
+
+    def print_adj_list(self):
+        print("Lista sąsiedztwa:")
+        for vertex, neighbors in enumerate(self.adj_list):
+            print(f"Wierzchołek {vertex}: {neighbors}")
+
+    def draw_graph(self):
+        print("Interpretacja graficzna:")
+        for row in self.adj_matrix:
+            for cell in row:
+                print("  " if cell == 0 else " *", end="")
+            print()
+
+
+def get_graph_type():
+    while True:
+        graph_type = input("Podaj typ grafu (skierowany, nieskierowany): ")
+        if graph_type.lower() in ["skierowany", "nieskierowany"]:
+            return graph_type.lower() == "skierowany"
+        else:
+            print("Nieprawidłowy typ grafu. Spróbuj ponownie.")
+
+
+def get_graph_properties():
+    num_vertices = int(input("Podaj liczbę wierzchołków: "))
+    directed = get_graph_type()
+    weighted = input("Czy graf ma być ważony? (tak/nie): ").lower() == "tak"
+    return num_vertices, directed, weighted
+
+
+def get_edges(graph):
+    num_edges = int(input("Podaj liczbę połączeń: "))
+    for _ in range(num_edges):
+        edge = input("Podaj połączenie w formacie 'źródło cel waga' (oddzielone spacjami): ")
+        source, destination, weight = map(int, edge.split())
+        graph.add_edge(source, destination, weight)
+
+
+def main():
+    print("Program do definiowania grafu.")
+
+    num_vertices, directed, weighted = get_graph_properties()
+    graph = Graph(num_vertices, directed, weighted)
+
+    get_edges(graph)
+
+    graph.print_adj_matrix()
+    print()
+    graph.print_adj_list()
+    print()
+    graph.draw_graph()
+
+
+if __name__ == "__main__":
+    main()

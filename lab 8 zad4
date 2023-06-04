@@ -1,0 +1,68 @@
+class Graph:
+    def __init__(self, num_vertices):
+        self.num_vertices = num_vertices
+        self.adj_list = [[] for _ in range(num_vertices)]
+
+    def add_edge(self, source, destination, weight):
+        self.adj_list[source].append((destination, weight))
+
+    def dijkstra(self, source):
+        distances = [float('inf')] * self.num_vertices
+        distances[source] = 0
+        visited = [False] * self.num_vertices
+
+        while True:
+            min_distance = float('inf')
+            min_vertex = -1
+
+            for v in range(self.num_vertices):
+                if not visited[v] and distances[v] < min_distance:
+                    min_distance = distances[v]
+                    min_vertex = v
+
+            if min_vertex == -1:
+                break
+
+            visited[min_vertex] = True
+
+            for neighbor, edge_weight in self.adj_list[min_vertex]:
+                distance = distances[min_vertex] + edge_weight
+
+                if distance < distances[neighbor]:
+                    distances[neighbor] = distance
+
+        return distances
+
+
+def get_graph_properties():
+    num_vertices = int(input("Podaj liczbę wierzchołków: "))
+    return num_vertices
+
+
+def get_edges(graph):
+    num_edges = int(input("Podaj liczbę połączeń: "))
+    for _ in range(num_edges):
+        edge = input("Podaj połączenie w formacie 'źródło cel waga' (oddzielone spacjami): ")
+        source, destination, weight = map(int, edge.split())
+        graph.add_edge(source, destination, weight)
+
+
+def main():
+    print("Program do znajdowania najkrótszej drogi w grafie (algorytm Dijkstry).")
+
+    num_vertices = get_graph_properties()
+    graph = Graph(num_vertices)
+
+    get_edges(graph)
+
+    source_vertex = int(input("Podaj wierzchołek początkowy: "))
+
+    distances = graph.dijkstra(source_vertex)
+
+    print("Najkrótsze odległości od wierzchołka", source_vertex)
+    for vertex, distance in enumerate(distances):
+        print(f"Wierzchołek {vertex}: {distance}")
+
+
+if __name__ == "__main__":
+    main()

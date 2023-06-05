@@ -1,0 +1,8 @@
+n = int(input("podaj n "))
+previous = 4
+current_value=0
+for i in range(2, n + 1):
+    current_value = 1 / (1 - previous)
+    
+
+print(f"Wartość f({n}) = {current_value}")

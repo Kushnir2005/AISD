@@ -1,0 +1,57 @@
+def evaluate_postfix(expression):
+    stack = []
+
+    operators = {
+        '+': lambda a, b: a + b,
+        '-': lambda a, b: a - b,
+        '*': lambda a, b: a * b,
+        '/': lambda a, b: a / b
+    }
+
+    for token in expression.split():
+        if token.isdigit():
+            stack.append(int(token))
+        elif token in operators:
+            if len(stack) < 2:
+                raise ValueError("Błędne wyrażenie postfiksowe")
+            b = stack.pop()
+            a = stack.pop()
+            result = operators[token](a, b)
+            stack.append(result)
+        else:
+            raise ValueError("Nieznany operator")
+
+    if len(stack) != 1:
+        raise ValueError("Błędne wyrażenie postfiksowe")
+
+    return stack[0]
+
+
+postfix_expression1 = "5 3 + 2 *"
+postfix_expression2 = "4 2 * 6 5 - +"
+postfix_expression3 = "3 4 + 5 6 + * 2 /"
+postfix_expression4 = "5 6 + * 2 3 - 4 5 + * +"
+
+try:
+    result1 = evaluate_postfix(postfix_expression1)
+    print(f"Wartość wyrażenia {postfix_expression1} wynosi: {result1}")
+except ValueError as e:
+    print(f"Błąd: {str(e)}")
+
+try:
+    result2 = evaluate_postfix(postfix_expression2)
+    print(f"Wartość wyrażenia {postfix_expression2} wynosi: {result2}")
+except ValueError as e:
+    print(f"Błąd: {str(e)}")
+
+try:
+    result3 = evaluate_postfix(postfix_expression3)
+    print(f"Wartość wyrażenia {postfix_expression3} wynosi: {result3}")
+except ValueError as e:
+    print(f"Błąd: {str(e)}")
+
+try:
+    result4 = evaluate_postfix(postfix_expression4)
+    print(f"Wartość wyrażenia {postfix_expression4} wynosi: {result4}")
+except ValueError as e:
+    print(f"Błąd: {str(e)}")

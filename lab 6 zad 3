@@ -1,0 +1,23 @@
+def is_valid_symbols(expression):
+    stack = []
+
+    for symbol in expression:
+        if symbol in '([{':
+            stack.append(symbol)
+        elif symbol in ')]}':
+            if not stack:
+                return False
+            opening_symbol = stack.pop()
+            if (symbol == ')' and opening_symbol != '(') or \
+               (symbol == ']' and opening_symbol != '[') or \
+               (symbol == '}' and opening_symbol != '{'):
+                return False
+
+    return len(stack) == 0
+
+
+expression1 = "(()()())"
+
+
+print(is_valid_symbols(expression1)) 
+

@@ -1,0 +1,11 @@
+count = 0
+n = int(input("Podaj liczbę całkowitą n: "))
+licznik = 0
+
+while licznik < n:
+    liczba = int(input("Podaj liczbę całkowitą: "))
+    if liczba < 0:
+        count += 1
+    licznik += 1
+
+print("Liczba ujemnych liczb w ciągu: ", count)

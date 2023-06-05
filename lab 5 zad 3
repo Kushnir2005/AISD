@@ -1,0 +1,16 @@
+def calculate_S(n):
+    if n == 0:
+        return 1
+    elif n == 1:
+        return 1
+
+    s_values = [1, 1]
+
+    for i in range(2, n+1):
+        s_values.append(2 * s_values[i-1] - s_values[i-2])
+
+    return s_values[n]
+
+n = int(input("podaj wartość n:"))
+result = calculate_S(n)
+print(f"Wartość S({n}): {result}")

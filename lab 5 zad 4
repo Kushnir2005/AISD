@@ -1,0 +1,19 @@
+def calculate_binomial_coefficient(m, n):
+    if n > m:
+        return 0
+
+    coefficients = [[0] * (n+1) for _ in range(m+1)]  
+
+    for i in range(m+1):
+        for j in range(min(i, n)+1):
+            if j == 0 or j == i:
+                coefficients[i][j] = 1
+            else:
+                coefficients[i][j] = coefficients[i-1][j-1] + coefficients[i-1][j]
+
+    return coefficients[m][n]
+
+m = 5   
+n = 3
+result = calculate_binomial_coefficient(m, n)
+print(f"Współczynnik dwumianowy C({m}, {n}): {result}")

@@ -1,0 +1,12 @@
+array = [1, 5, 3, 9, 2]
+
+size = len(array)
+if size == 1:
+    total_sum = array[0]
+else:
+    middle = size // 2
+    sum1 = sum(array[:middle])
+    sum2 = sum(array[middle:])
+    total_sum = sum1 + sum2
+
+print(f"Suma elementów w tablicy: {total_sum}")

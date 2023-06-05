@@ -1,0 +1,39 @@
+class Queue:
+    def __init__(self):
+        self.items = []
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def enqueue(self, item):
+        self.items.append(item)
+
+    def dequeue(self):
+        if self.is_empty():
+            raise IndexError("Kolejka jest pusta")
+        return self.items.pop(0)
+
+    def size(self):
+        return len(self.items)
+
+
+def hot_potato(players, passes):
+    queue = Queue()
+
+    for player in players:
+        queue.enqueue(player)
+
+    while queue.size() > 1:
+        for _ in range(passes):
+            queue.enqueue(queue.dequeue()) 
+        eliminated_player = queue.dequeue() 
+        print(f"Gracz {eliminated_player} odpada z gry.")
+
+    winner = queue.dequeue()
+    print(f"Gracz {winner} jest zwycięzcą!")
+
+
+players = ["Adam", "Beata", "Cezary", "Daria", "Edward", "Fiona"]
+passes = 3
+
+hot_potato(players, passes)

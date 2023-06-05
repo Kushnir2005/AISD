@@ -1,0 +1,12 @@
+liczby = [123, 456, 12, 34, 9, 567]
+i = 0
+
+while i < len(liczby):
+    j = i + 1
+    while j < len(liczby):
+        if str(liczby[i]) > str(liczby[j]):
+            liczby[i], liczby[j] = liczby[j], liczby[i]
+        j += 1
+    i += 1
+
+print("Posortowane liczby: ", liczby)
